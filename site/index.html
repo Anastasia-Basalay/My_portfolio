@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Портфолио</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="bar"></div><div id="cursor"></div><div id="toast">Скопировано ✓</div>
+
+<nav>
+  <a class="logo" href="#top" id="logo"></a>
+  <button id="burger">МЕНЮ</button>
+  <div class="menu" id="menu">
+    <a href="#about">Обо мне</a><a href="#skills">Навыки</a><a href="#models">3D</a>
+    <a href="#projects">Проекты</a><a href="#process">Процесс</a><a href="#contacts">Контакты</a>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-photo" id="photoBox"></div>
+  <div class="hero-text">
+    <p class="role" id="role"></p>
+    <h1 id="name"></h1>
+    <p class="lead" id="tagline"></p>
+    <div class="btns"><a class="btn" href="#projects">Смотреть работы</a><a class="btn" href="#contacts">Связаться</a></div>
+  </div>
+  <div class="marquee"><div id="marquee"></div></div>
+</section>
+
+<section id="about"><div class="wrap reveal">
+  <p class="label">01 — Обо мне</p><h2>Кто я</h2>
+  <p class="lead" id="aboutText"></p><div class="stats" id="stats"></div>
+</div></section>
+
+<section id="skills"><div class="wrap reveal">
+  <p class="label">02 — Навыки</p><h2>Что я умею</h2>
+  <div class="grid" id="skillGrid"></div>
+</div></section>
+
+<section id="models"><div class="wrap reveal">
+  <p class="label">03 — 3ds Max</p><h2>3D-галерея</h2>
+  <div class="grid" id="modelGrid"></div>
+</div></section>
+
+<section id="projects"><div class="wrap reveal">
+  <p class="label">04 — Проекты</p><h2>Работы</h2>
+  <div class="chips" id="chips"></div><div class="grid" id="projectGrid"></div>
+</div></section>
+
+<section id="process"><div class="wrap reveal">
+  <p class="label">05 — Геймдизайн</p><h2>Как я делаю игры</h2>
+  <div class="steps" id="steps"></div>
+</div></section>
+
+<section id="contacts"><div class="wrap reveal">
+  <p class="label">06 — Контакты</p><h2>Давайте работать вместе</h2>
+  <button class="mail" id="mail" title="Нажми, чтобы скопировать"></button>
+  <div class="btns" id="contactLinks" style="margin-top:30px"></div>
+</div></section>
+<footer id="footer"></footer>
+
+<dialog id="modal"></dialog>
+
+<!-- Three.js подключается один раз и отдаётся остальным скриптам через window.Three -->
+<script type="module">
+  import * as THREE from "three";
+  import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+  import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+  window.Three = { THREE, OrbitControls, GLTFLoader, RoomEnvironment };
+</script>
+
+<!-- Остальные скрипты — обычные, выполняются по порядку (defer) -->
+<script defer src="js/utils.js"></script>
+<script defer src="js/data/profile.js"></script>
+<script defer src="js/data/skills.js"></script>
+<script defer src="js/data/models.js"></script>
+<script defer src="js/data/projects.js"></script>
+<script defer src="js/components/viewer.js"></script>
+<script defer src="js/components/render.js"></script>
+<script defer src="js/components/effects.js"></script>
+<script defer src="js/main.js"></script>
+</body>
+</html>

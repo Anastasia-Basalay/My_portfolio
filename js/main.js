@@ -4,7 +4,8 @@
 renderProfile();
 renderSkills();
 renderModels();
-renderWork();
+renderFacts();
+renderRoles();
 renderExperience();
 renderChips();
 renderProjects("all");

@@ -15,7 +15,7 @@ const skills = [
     tags: ["C++", "Java", "Python", "Photoshop", "Taiga", "Atlassian"] }
 ];
 
-const ticker = ["GAME DESIGN", "CORE LOOP", "UNITY", "3DS MAX", "LOW POLY", "C++ · JAVA · PYTHON"];
+const ticker = ["GAME DESIGN", "CORE LOOP", "UNITY", "3DS MAX", "LOW POLY", "C++ · JAVA · PYTHON", "СТАЖИРОВКА · ЛЕТО 2027"];
 
 // ОПЫТ И ОБРАЗОВАНИЕ. when — подпись слева (можно писать даты, например "2025 — сейчас").
 const experience = [
@@ -24,5 +24,7 @@ const experience = [
   { when: "Хакатон", title: "Ментор по геймдизайну", where: "Для школьников",
     text: "Помогала командам придумать концепт игры и подготовить презентацию." },
   { when: "3 курс", title: "БГУИР, ФИТиУ", where: "Информационные системы и технологии в игровой индустрии",
-    text: "Геймдизайн, 3D-моделирование, Unity, программирование на C++, Java и Python." }
+    text: "Геймдизайн, 3D-моделирование, Unity, программирование на C++, Java и Python." },
+  { when: "2021", title: "Художественная школа", where: "Художественное образование",
+    text: "Окончила в 2021 году." }
 ];

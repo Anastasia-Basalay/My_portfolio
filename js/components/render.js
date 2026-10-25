@@ -8,9 +8,22 @@ function renderProfile() {
   $("tagline").textContent = profile.tagline;
   $("aboutText").textContent = profile.about;
   $("mail").textContent = profile.email;
-  $("avail").textContent = profile.availability || "";
+  $("avail").textContent = `${info.seeking.title} · ${info.seeking.period}`;
+  $("badgeText").textContent = `Ищу стажировку · ${info.seeking.period}`;
+  $("loc").innerHTML = `${pinIcon} ${info.city}`;
+  const phone = $("phone");
+  phone.hidden = !info.phone;
+  if (info.phone) {
+    phone.textContent = info.phone;
+    phone.href = "tel:" + info.phone.replace(/[^\d+]/g, "");
+    phone.onclick = (e) => { // на компьютере копируем номер, на телефоне открывается звонок
+      if (!matchMedia("(hover:hover)").matches) return;
+      e.preventDefault(); navigator.clipboard?.writeText(info.phone); toast();
+    };
+  }
   const contacts = profile.contacts.filter((c) => !c.href.includes("your-name")); // заглушки не показываем
   if (profile.cv) contacts.unshift({ label: "Резюме (PDF)", href: profile.cv });
+  if (info.instagram) contacts.push({ label: "Instagram", href: info.instagram });
   $("contactLinks").innerHTML = contacts.map(linkButton).join("");
   $("footer").textContent = `© ${new Date().getFullYear()} ${profile.name}`;
   $("stats").innerHTML = profile.stats
@@ -83,7 +96,46 @@ function showProjectModal(title) {
   $("close").onclick = () => $("modal").close();
 }
 
-function renderWork() {
-  $("offerGrid").innerHTML = offer.map((o) => `<article class="card static"><h3>${o.title}</h3><p>${o.text}</p></article>`).join("");
-  $("steps").innerHTML = process.map((p) => `<li><h4>${p.title}</h4><p>${p.text}</p></li>`).join("");
+const pinIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>';
+
+function toast() {
+  $("toast").classList.add("show");
+  setTimeout(() => $("toast").classList.remove("show"), 1800);
+}
+
+// Плитки «коротко обо мне»; у английского шкала уровней A1–C2
+function renderFacts() {
+  const levels = ["A1", "A2", "B1", "B2", "C1", "C2"], at = levels.indexOf(info.english);
+  const tile = (label, value, extra = "") => `<div class="card tilt fact"><span>${label}</span><b>${value}</b>${extra}</div>`;
+  $("facts").innerHTML =
+    tile("Город", info.city) + tile("Возраст", info.age) + tile("Учусь", info.study) +
+    tile("Английский", info.english, `<div class="scale">${levels.map((l, i) => `<i class="${i <= at ? "on" : ""}" style="--i:${i}">${l}</i>`).join("")}</div>`);
+}
+
+// Роли: вкладки, сами переключаются, пока не нажмёшь; кнопка открывает нужные проекты
+function renderRoles() {
+  $("seekText").textContent = `Производственная практика и стажировка, ${info.seeking.period}. Выбери роль — покажу, что умею и что уже делала.`;
+  $("roleTabs").innerHTML = roles.map((r, i) => `<button class="btn" role="tab" data-i="${i}">${r.title}</button>`).join("");
+  const panel = $("rolePanel");
+  let current = 0, timer;
+  const show = (i) => {
+    current = i;
+    const r = roles[i];
+    document.querySelectorAll("#roleTabs .btn").forEach((b) => b.classList.toggle("on", +b.dataset.i === i));
+    panel.classList.remove("swap"); void panel.offsetWidth; panel.classList.add("swap");
+    panel.innerHTML = `<h3>${r.title}</h3><p>${r.text}</p>${tagsHtml(r.tags)}<div class="btns"><button class="btn" data-go="${r.filter}">Смотреть работы</button></div>`;
+  };
+  show(0);
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((current + 1) % roles.length), 6000);
+  $("roleTabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (b) { clearInterval(timer); show(+b.dataset.i); }
+  });
+  panel.addEventListener("click", (e) => {
+    const go = e.target.closest("[data-go]");
+    if (!go) return;
+    clearInterval(timer);
+    document.querySelector(`#chips [data-f="${go.dataset.go}"]`)?.click();
+    $("projects").scrollIntoView({ behavior: "smooth" });
+  });
 }

@@ -113,18 +113,14 @@ dialog .btns{margin-top:22px}
 @keyframes blink{50%{opacity:0}}
 .role{min-height:1.6em}
 nav{padding-top:calc(18px + env(safe-area-inset-top));transition:background .3s}
-nav.scrolled{background:rgba(10,10,12,.78);backdrop-filter:blur(10px);padding-block:12px}
+nav::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(10,10,12,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:0;transition:opacity .3s}
+nav.scrolled::before{opacity:1}
+nav.scrolled{padding-block:12px}
 .menu{gap:clamp(14px,2.4vw,30px)}
 .menu a.active{color:#fff}
 .menu a.active::after{width:100%}
 #burger{position:relative;z-index:2}
 .card.static{cursor:default;transform:none}
-.sub{font:800 clamp(1.3rem,3vw,1.8rem) var(--head);margin:60px 0 24px}
-.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:16px;counter-reset:s}
-.steps li{counter-increment:s;border-top:2px solid var(--pink);padding-top:14px}
-.steps li::before{content:counter(s,decimal-leading-zero);font:800 1.6rem var(--head);color:var(--pink)}
-.steps h4{font:600 1rem var(--head);margin:6px 0}
-.steps p{color:var(--muted);font-size:.95rem}
 #projectGrid .card{animation:pop .5s both;animation-delay:calc(var(--i,0) * 60ms)}
 @keyframes pop{from{opacity:0;transform:translateY(24px) scale(.97)}}
 .vtools{position:absolute;top:10px;right:10px;display:flex;gap:6px}
@@ -149,3 +145,26 @@ nav.scrolled{background:rgba(10,10,12,.78);backdrop-filter:blur(10px);padding-bl
   body::after{display:none}
 }
 @media(hover:none){.card:hover{box-shadow:none}.btn:hover{transform:none}}
+
+/* ===== стажировка, факты, контакты ===== */
+.badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.05);backdrop-filter:blur(8px);font-weight:700;font-size:.9rem;margin-bottom:24px;transition:.3s}
+.badge:hover{border-color:var(--pink);box-shadow:0 0 24px rgba(255,46,147,.35)}
+.dot{width:10px;height:10px;border-radius:50%;background:#35e08a;animation:ping 1.8s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(53,224,138,.7)}70%,100%{box-shadow:0 0 0 12px rgba(53,224,138,0)}}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px;margin-top:44px}
+.fact{cursor:default;padding:20px}
+.fact span{display:block;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--soft)}
+.fact b{display:block;font:800 clamp(1.4rem,4vw,2rem)/1.15 var(--head);margin-top:8px}
+.scale{display:flex;gap:4px;margin-top:12px}
+.scale i{flex:1;text-align:center;font-style:normal;font-size:.68rem;padding:3px 0;border-radius:6px;border:1px solid var(--line);color:var(--muted);transition:background .5s,color .5s,border-color .5s;transition-delay:calc(var(--i) * 140ms)}
+.reveal.visible .scale i.on{background:var(--pink);border-color:var(--pink);color:#fff}
+.roles{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 20px}
+.rolepanel{max-width:760px;min-height:220px}
+.rolepanel.swap{animation:pop .45s both}
+.rolepanel h3{font:800 1.5rem var(--head);margin:0 0 10px}
+.rolepanel .btns{margin-top:18px}
+.loc{display:flex;align-items:center;gap:8px;color:var(--soft);font-weight:700;margin-bottom:16px}
+.loc svg{width:18px;height:18px}
+.mail[hidden]{display:none}
+.phone{display:block;margin-top:8px;font-size:clamp(1.2rem,4.4vw,2.4rem)}
+@media(max-width:760px){.facts{grid-template-columns:1fr 1fr;gap:12px}.fact{padding:16px}.fact:last-child{grid-column:1/-1}.fact b{font-size:1.15rem}}
