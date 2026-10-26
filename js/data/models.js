@@ -9,10 +9,10 @@ const models = [
     description: "Моделирование и материалы в 3ds Max.",
     src: "models/kuvshin.glb"
   },
-   {
-    title: "Кран",
+  {
+    title: "Уточка",
     description: "Моделирование и материалы в 3ds Max.",
-    src: "models/5 лаба.glb"
+    src: "models/уточка.glb"
   },
    {
     title: "Деталька",
@@ -25,9 +25,9 @@ const models = [
     src: "models/кинжал.glb"
   },
   {
-    title: "Уточка",
+    title: "Кран",
     description: "Моделирование и материалы в 3ds Max.",
-    src: "models/уточка.glb"
+    src: "models/5 лаба.glb"
   },
     {
     title: "Тыква",
