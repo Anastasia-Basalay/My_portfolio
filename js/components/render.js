@@ -78,7 +78,7 @@ function renderChips() {
 
 function renderProjects(cat) {
   $("projectGrid").innerHTML = projects.byCategory(cat).map((p, i) => `
-    <article class="card tilt project" data-t="${p.title}" style="--i:${i}">
+    <article class="card tilt project" data-t="${p.title}" tabindex="0" role="button" aria-label="Подробнее: ${p.title}" style="--i:${i}">
       <div class="cover" ${p.image ? `style="background-image:url('${p.image}')"` : ""}></div>
       <span class="status">${p.status}</span><h3>${p.title}</h3><p>${p.description}</p>
       ${tagsHtml(p.tools)}
@@ -88,10 +88,32 @@ function renderProjects(cat) {
 function showProjectModal(title) {
   const p = projects.findByTitle(title);
   if (!p) return;
-  $("modal").innerHTML = `
-    <span class="status">${p.status} · ${categories.get(p.cat)}</span><h3>${p.title}</h3><p>${p.description}</p>
-    ${tagsHtml(p.tools)}
-    <div class="btns">${p.link ? `<a class="btn" href="${p.link}" target="_blank" rel="noreferrer">Открыть</a>` : ""}<button class="btn" id="close">Закрыть</button></div>`;
+
+  const titleHtml = `<div class="project-modal-head"><span class="status">${p.status}</span><span class="project-cat">${categories.get(p.cat)}</span></div><h3>${p.title}</h3>`;
+  const tools = tagsHtml(p.tools);
+  const highlights = p.highlights?.length ? `<div class="project-highlights"><p class="project-kicker">Что я делала</p><ul>${p.highlights.map(x => `<li>${x}</li>`).join("")}</ul></div>` : "";
+  let body = "";
+
+  if (p.detailType === "gallery") {
+    body = `<div class="project-lead"><p>${p.detail}</p></div>
+      <div class="project-gallery">${p.gallery.map(([src,cap]) => `<figure><img src="${src}" alt="${cap}" loading="lazy"><figcaption>${cap}</figcaption></figure>`).join("")}</div>
+      ${highlights}<div class="project-note">${p.note}</div>`;
+  } else if (p.detailType === "research" || p.detailType === "study") {
+    body = `<div class="project-research"><div><p class="project-kicker">Почему я это разбирала</p><p>${p.detail}</p></div>${p.stat ? `<strong>${p.stat}</strong>` : `<div class="research-mark">↗</div>`}</div>${highlights}<div class="project-note">${p.note}</div>`;
+  } else if (p.detailType === "process" || p.detailType === "concept") {
+    body = `<div class="project-process"><div class="process-line"><span>01</span><b>Идея</b><span>02</span><b>Механика</b><span>03</span><b>Проверка</b></div><p>${p.detail}</p></div>${highlights}<div class="project-note">${p.note}</div>`;
+  } else if (p.detailType === "role") {
+    body = `<div class="project-role ${p.quote ? "with-quote" : "no-quote"}">${p.quote ? `<div class="role-quote">“${p.quote}”</div>` : ""}<p>${p.detail}</p></div>${highlights}`;
+  } else if (p.detailType === "challenge") {
+    body = `<div class="project-challenge"><p>${p.detail}</p><div class="challenge-word">ОГРАНИЧЕНИЕ → РЕШЕНИЕ</div></div>${highlights}<div class="project-note">${p.note}</div>`;
+  } else if (p.detailType === "prototype") {
+    body = `<div class="project-flow">${p.flow.map((x,i)=>`<span>${i+1}. ${x}</span>`).join("<i>→</i>")}</div><p>${p.detail}</p>${highlights}`;
+  } else {
+    body = `<p>${p.detail}</p>${highlights}`;
+  }
+
+  const media = p.image ? `<img class="project-modal-image" src="${p.image}" alt="${p.title}">` : "";
+  $("modal").innerHTML = `<div class="project-modal-inner ${p.detailType || "default"}">${media}${titleHtml}${body}<div class="project-modal-tools">${tools}</div><div class="btns">${p.link ? `<a class="btn" href="${p.link}" target="_blank" rel="noreferrer">Открыть</a>` : ""}<button class="btn" id="close">Закрыть</button></div></div>`;
   $("modal").showModal();
   $("close").onclick = () => $("modal").close();
 }

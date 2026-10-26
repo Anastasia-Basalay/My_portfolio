@@ -120,6 +120,11 @@ function initClicks() {
     if (card) showProjectModal(card.dataset.t);
   });
 
+  $("projectGrid").addEventListener("keydown", (e) => {
+    const card = e.target.closest(".project");
+    if (card && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); showProjectModal(card.dataset.t); }
+  });
+
   $("modal").addEventListener("click", (e) => { if (e.target === $("modal")) $("modal").close(); });
 }
 
