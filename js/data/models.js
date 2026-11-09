@@ -19,10 +19,5 @@ const models = [
     description: "Моделирование и материалы в 3ds Max.",
     src: "models/гусь.glb"
   },
-  {
-    title: "Деталька",
-    description: "Моделирование и материалы в 3ds Max.",
-    src: "models/деталька.glb"
-  },
 
 ];
