@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Портфолио</title>
+<meta name="theme-color" content="#09090b">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="bar"></div><div id="cursor"></div><div id="toast">Скопировано ✓</div>
+
+<nav>
+  <a class="brand" href="#home" data-go="home"><i>◆</i><b id="brandName"></b><small id="brandSub"></small></a>
+  <div class="menu" id="menu">
+    <a href="#home" data-go="home">Главная</a>
+    <a href="#about" data-go="about">Обо мне</a>
+    <a href="#3d" data-go="3d">3D</a>
+    <a href="#unity" data-go="unity">Unity</a>
+    <a href="#design" data-go="design">Геймдизайн</a>
+    <a href="#experience" data-go="experience">Опыт</a>
+    <a href="#contacts" data-go="contacts">Контакты</a>
+  </div>
+  <button class="btn contact-btn" id="contactBtn">Связаться</button>
+  <button id="burger">МЕНЮ</button>
+</nav>
+
+<main>
+  <section class="page hero" id="p-home" data-page="home">
+    <div class="hero-photo" id="photoBox"></div>
+    <div class="hero-text">
+      <p class="role" id="role"></p>
+      <h1 id="name"></h1>
+      <p class="lead" id="tagline"></p>
+      <div class="gmenu" id="gmenu"></div>
+    </div>
+    <div class="marquee"><div id="marquee"></div></div>
+  </section>
+
+  <section class="page" id="p-about" data-page="about"><div class="wrap" id="aboutRoot"></div></section>
+  <section class="page" id="p-3d" data-page="3d"><div class="wrap" id="threeRoot"></div></section>
+  <section class="page" id="p-unity" data-page="unity"><div class="wrap" id="unityRoot"></div></section>
+  <section class="page" id="p-design" data-page="design"><div class="wrap" id="designRoot"></div></section>
+  <section class="page" id="p-experience" data-page="experience"><div class="wrap" id="experienceRoot"></div></section>
+  <section class="page" id="p-contacts" data-page="contacts"><div class="wrap" id="contactsRoot"></div></section>
+</main>
+
+<button id="toTop" aria-label="Наверх">↑</button>
+<dialog id="modal" class="wide"></dialog>
+<dialog id="contactDialog"></dialog>
+<dialog id="docDialog"></dialog>
+
+<!-- Three.js загружается только когда открывается вкладка 3D (так сайт стартует быстро) -->
+<script type="module">
+  window.loadThree = () => window.Three ? Promise.resolve(window.Three) : Promise.all([
+    import("three"),
+    import("three/addons/controls/OrbitControls.js"),
+    import("three/addons/loaders/GLTFLoader.js"),
+    import("three/addons/environments/RoomEnvironment.js")
+  ]).then(([THREE, controls, loader, env]) => (window.Three = {
+    THREE, OrbitControls: controls.OrbitControls, GLTFLoader: loader.GLTFLoader, RoomEnvironment: env.RoomEnvironment
+  }));
+</script>
+
+<!-- Остальные скрипты — обычные, выполняются по порядку (defer) -->
+<script defer src="js/utils.js"></script>
+<script defer src="js/data/settings.js"></script>
+<script defer src="js/data/profile.js"></script>
+<script defer src="js/data/experience.js"></script>
+<script defer src="js/data/models.js"></script>
+<script defer src="js/data/projects.js"></script>
+<script defer src="js/components/viewer.js"></script>
+<script defer src="js/components/arts.js"></script>
+<script defer src="js/components/reel.js"></script>
+<script defer src="js/components/render.js"></script>
+<script defer src="js/components/stage3d.js"></script>
+<script defer src="js/components/stageunity.js"></script>
+<script defer src="js/components/modals.js"></script>
+<script defer src="js/components/effects.js"></script>
+<script defer src="js/components/backdrop.js"></script>
+<script defer src="js/components/router.js"></script>
+<script defer src="js/main.js"></script>
+</body>
+</html>
