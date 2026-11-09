@@ -104,12 +104,6 @@ const projects = {
       cover: "images/гусь.jpg",
       render: { image: "images/гусь.jpg", caption: "Рендер из 3ds Max · гусь" },
       summary: "3D-модель кувшина.",
-      points: ["Сделала модель гуся."] },
-    { title: "Гусь", tab: "3d", status: "Готово", tools: ["3ds Max", "Материалы"],
-      model: 1,
-      cover: "images/гусь.jpg",
-      render: { image: "images/гусь.jpg", caption: "Рендер из 3ds Max · гусь" },
-      summary: "3D-модель кувшина.",
       points: ["Сделала модель гуся."] }
   ],
 
